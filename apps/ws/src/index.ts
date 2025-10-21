@@ -1,0 +1,14 @@
+import { WebSocketServer } from "ws";
+import { client } from '@repo/prisma/client';
+
+const server = new WebSocketServer({
+    port:3003
+})
+
+server.on("connection",async (socket)=>{
+      await client.uSER.create({data:{
+        username:Math.random().toString(),
+        password:Math.random().toString()
+      }})
+    socket.send("connected to the server")
+})
