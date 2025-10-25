@@ -1,26 +1,40 @@
-import express, { Request,Response } from "express"
-import { client } from '@repo/prisma/client';
+import express from "express";
+import { client } from "@repo/prisma/client";
 
 const app = express();
 
-app.get("/",(req:Request,res:Response)=>{
-    console.log(req.body())
-    res.status(200).send("heath is ok")
+app.use(express.json());
+
+app.get("/users", (req, res) => {
+  client.user.findMany()
+    .then(users => {
+      res.json(users);
+    })
+    .catch(err => {
+      res.status(500).json({ error: err.message });
+    });
 })
 
-app.post("/signup",async (req:Request,res:Response)=>{
-    const username = req.body.username;
-    const password = req.body.pass;
+app.post("/user", (req, res) => {
+  const { username, password } = req.body;
+  
+  if (!username || !password) {
+    res.status(400).json({ error: "Username and password are required" });
+    return
+  }
 
-    const user = await client.uSER.create({
-        data:{
-            username,
-            password
-        }
+  client.user.create({
+    data: {
+      username,
+      password
+    }
+  })
+    .then(user => {
+      res.status(201).json(user);
     })
-
-    res.json({
-        message:"signup successfull",
-        id:user.id
-    })
+    .catch(err => {
+      res.status(500).json({ error: err.message });
+    });
 })
+
+app.listen(8080);
