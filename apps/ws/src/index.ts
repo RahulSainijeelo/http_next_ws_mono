@@ -2,7 +2,7 @@ import { WebSocketServer } from "ws";
 import { client } from '@repo/prisma/client';
 
 const server = new WebSocketServer({
-    port:3003
+    port:8081
 })
 
 server.on("connection",async (socket)=>{

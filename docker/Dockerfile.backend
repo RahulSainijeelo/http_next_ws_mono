@@ -1,13 +1,16 @@
-FROM oven/bun:1
+FROM node:alpine
 
 WORKDIR /usr/src/app
 
-COPY . .
-
-RUN bun install
-
-RUN bun run generate:db
+COPY ./packages ./packages
+COPY ./turbo.json ./turbo.json
+COPY ./package.json ./package.json
+COPY ./pnpm-workspace.yaml ./pnpm-workspace.yaml
+COPY ./pnpm-lock.yaml ./pnpm-lock.yaml
+COPY ./apps/http ./apps/http
+RUN npm i -g pnpm
+RUN pnpm install
 
 EXPOSE 8080
 
-CMD ["bun", "start:backend"]
+CMD ["npm","run","start:back"]

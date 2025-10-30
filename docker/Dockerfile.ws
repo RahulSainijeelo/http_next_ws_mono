@@ -1,0 +1,16 @@
+FROM node:alpine
+
+WORKDIR /usr/src/app
+
+COPY ./packages ./packages
+COPY ./turbo.json ./turbo.json
+COPY ./package.json ./package.json
+COPY ./pnpm-workspace.yaml ./pnpm-workspace.yaml
+COPY ./pnpm-lock.yaml ./pnpm-lock.yaml
+COPY ./apps/ws ./apps/ws
+RUN npm i -g pnpm
+RUN pnpm install
+
+EXPOSE 8080
+
+CMD ["npm","run","start:ws"]

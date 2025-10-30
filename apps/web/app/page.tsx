@@ -18,12 +18,13 @@ const ThemeImage = async (props: Props) => {
 };
 
 export default async function Home() {
-  const user = await client.user.findFirst();
+  const user = await client.user.findMany()
+  console.log(user)
   
  return (
   <div>
 <div>
-      {user?.toString()}
+     users are these {user[0]?.username}
     </div>
   </div>
  )
