@@ -9,6 +9,7 @@ app.get("/users", (req, res) => {
   client.user.findMany()
     .then(users => {
       res.json(users);
+      console.log(users)
     })
     .catch(err => {
       res.status(500).json({ error: err.message });
