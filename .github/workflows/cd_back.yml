@@ -28,4 +28,4 @@ jobs:
           mkdir -p /home/runner/.ssh
           ls /home/runner/.ssh
           chmod 700 /home/runner/ssh_key
-          ssh -o StrictHostKeyChecking=no -i ~/ssh_key root@64.227.147.124 -t "docker stop user_backend && docker run --name user_backend -d -p 8080:8080 rahul196270/turo_prac:${{ github.sha }}"
+          ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@52.66.211.126 -t "docker stop user_backend && docker run --name user_backend -d -p 8080:8080 rahul196270/turo_prac:${{ github.sha }}"
