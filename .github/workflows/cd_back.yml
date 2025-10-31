@@ -23,3 +23,9 @@ jobs:
           file: ./docker/Dockerfile.backend
           push: true
           tags: rahul196270/turo_prac:${{ github.sha }}
+      - run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" &> ~/ssh_key
+          mkdir -p /home/runner/.ssh
+          ls /home/runner/.ssh
+          chmod 700 /home/runner/ssh_key
+          ssh -o StrictHostKeyChecking=no -i ~/ssh_key root@64.227.147.124 -t "docker stop user_backend && docker run --name user_backend -d -p 8080:8080 rahul196270/turo_prac:${{ github.sha }}"
